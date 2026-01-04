@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>היום הגדול הגיע! 🎂 24</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700&display=swap');
+        body { font-family: 'Assistant', sans-serif; background: #fdf2f8; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; text-align: center; overflow-x: hidden; }
+        .page { background: white; padding: 40px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 550px; width: 90%; display: none; border: 1px solid #fce4ec; position: relative; }
+        .active { display: block; animation: fadeIn 0.5s ease; }
+        h1 { color: #c2185b; font-weight: 700; margin-bottom: 20px; }
+        p { font-size: 19px; line-height: 1.6; color: #444; }
+        .hint-box { background: #fffaf0; padding: 20px; border-radius: 15px; margin: 20px 0; border: 1px dashed #ffb74d; font-weight: bold; }
+        input { width: 100%; padding: 12px; margin: 20px 0; border: 2px solid #f8bbd0; border-radius: 12px; text-align: center; font-size: 18px; outline: none; box-sizing: border-box; }
+        button { background: #c2185b; color: white; border: none; padding: 12px 35px; border-radius: 25px; cursor: pointer; font-size: 18px; font-weight: bold; transition: 0.3s; width: 100%; }
+        button:hover { background: #880e4f; transform: scale(1.02); }
+        .age-badge { background: #c2185b; color: white; display: inline-block; padding: 5px 15px; border-radius: 50px; font-size: 24px; margin-bottom: 10px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="page active" id="p0">
+        <div class="age-badge">24</div>
+        <h1>יום הולדת שמח דנדון! 🎈</h1>
+        <p>היום זה היום שלך! ה-7.1 הגיע, ואת רשמית בת 24.</p>
+        <p>כמו שסיכמנו, שום דבר לא קורה בלי אתגר קטן... החידון של היום יחשוף לא רק לאן הולכים, אלא גם עם מי!</p>
+        <button onclick="go(1)">אני מוכנה, בוא נחגוג!</button>
+    </div>
+
+    <div class="page" id="p1">
+        <h1>רמז 1: לא לבד בסיפור</h1>
+        <p>הערב אנחנו לא יוצאים רק שנינו. מצטרפים אלינו עוד שני אנשים שאת מאוד אוהבת.</p>
+        <p>מדובר ב"דאבל דייט" עם החברה הכי טובה שלך והחבר שלה.</p>
+        <p><b>מי החברה שתחגוג איתך הערב?</b></p>
+        <input id="ans1" placeholder="שם החברה...">
+        <button onclick="checkFriend()">אישור רמז</button>
+    </div>
+
+    <div class="page" id="p2">
+        <h1>רמז 2: הווייב של הערב</h1>
+        <p>אנחנו לא הולכים למסעדה עם מפות לבנות הפעם. אנחנו הולכים למקום שבו המוזיקה קצת יותר חזקה, התאורה יותר נמוכה, והתפריט מתמקד בכוסות גבוהות, צ'ייסרים ואווירה של "הפי האוור".</p>
+        <p><b>לאיזה סוג של מקום אנחנו הולכים? (2 אותיות)</b></p>
+        <input id="ans2" placeholder="_ _">
+        <button onclick="check(2, 'בר', 3)">זה בטוח זה!</button>
+    </div>
+
+    <div class="page" id="p3">
+        <h1>רמז 3: החידה המספרית</h1>
+        <p>כדי לדעת לאיזה מקום ספציפי אנחנו נוסעים, תצטרכי לחשב:</p>
+        <div class="hint-box">
+            הגיל החדש שלך (24) <br>
+            פחות <br>
+            היום בחודש שבו נולדת (7)
+        </div>
+        <p><b>מה התוצאה?</b></p>
+        <input id="ans3" placeholder="המספר הוא...">
+        <button onclick="check(3, '17', 4)">זה המספר!</button>
+    </div>
+
+    <div id="p4" class="page">
+        <h1>הפיצוח הסופי 🔐</h1>
+        <p>אז יש לנו דאבל דייט, יש לנו בר, ויש לנו את הגיל שלך...</p>
+        <p><b>את יודעת לאן אנחנו יוצאים לחגוג את ה-24 שלך?</b></p>
+        <input type="text" id="finalAns" placeholder="שם הבר...">
+        <button onclick="checkFinal()">תגלה לי!</button>
+    </div>
+
+    <div class="page" id="p-final">
+        <h1>מזל טוב דנדון שלי את כבר ילדה גדולה בת 24! 🎉</h1>
+        <p>הערב אנחנו חוגגים בגדול עם עדי ונדב בבר!</p>
+        <p>הולך להיות לילה של אלכוהול (בעיקר שלהם), צחוקים וזיכרונות חדשים.</p>
+        <p><b>מזל טוב אהובה שלי, שתהיה שנה מושלמת! ❤️</b></p>
+    </div>
+
+    <script>
+        // הכנס כאן את שם החברה כדי שהקוד יזהה אותו
+        const bestFriendName = "עדי"; 
+
+        function go(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('p' + id).classList.add('active');
+        }
+
+        function checkFriend() {
+            const val = document.getElementById('ans1').value.trim();
+            if(val.length >= 2) { // מאשר כל שם מעל 2 אותיות כדי לא להיתקע
+                go(2);
+            } else {
+                alert("נו... את יודעת מי זאת!");
+            }
+        }
+
+        function check(id, correct, next) {
+            const val = document.getElementById('ans' + id).value.trim();
+            if(val.includes(correct)) {
+                go(next);
+            } else { 
+                alert("ניחוש יפה, אבל לא... תנסי שוב!"); 
+            }
+        }
+
+        function shootConfetti() {
+            var end = Date.now() + (4 * 1000);
+            var colors = ['#c2185b', '#f8bbd0', '#ffffff'];
+
+            (function frame() {
+                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
+                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: colors });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
+
+        function checkFinal() {
+            // כאן אפשר להוסיף את שם הבר הספציפי אם תרצה
+            go('-final');
+            shootConfetti();
+        }
+    </script>
+</body>
+</html>
